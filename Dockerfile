@@ -16,5 +16,5 @@ RUN ./mvnw clean package -DskipTests
 # Expose port (Render automatically sets PORT env variable)
 EXPOSE 8080
 
-# Run the built jar file
-CMD ["java", "-jar", "target/*.jar"]
+# Find and run the built JAR file
+CMD java -jar $(find target -name "*.jar" | head -n 1)
