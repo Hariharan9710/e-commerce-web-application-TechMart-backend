@@ -4,20 +4,17 @@ FROM eclipse-temurin:17-jdk-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy everything from your backend folder into the container
-COPY backend ./backend
+# Copy all files from current directory into container
+COPY . .
 
-# Change to the backend directory
-WORKDIR /app/backend
-
-# Give permission to mvnw (for Linux builds)
+# Give permission to mvnw
 RUN chmod +x mvnw
 
-# Build the Spring Boot JAR (skip tests for faster build)
+# Build the Spring Boot JAR (skip tests for speed)
 RUN ./mvnw clean package -DskipTests
 
-# Expose port (Render will use PORT env variable automatically)
+# Expose port (Render automatically sets PORT env variable)
 EXPOSE 8080
 
-# Start the Spring Boot application
+# Run the built jar file
 CMD ["java", "-jar", "target/*.jar"]
